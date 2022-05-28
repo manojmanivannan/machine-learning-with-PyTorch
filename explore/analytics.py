@@ -38,7 +38,7 @@ def get_principle_component(df,least_components=None,least_explained_variance=No
 
     
     # Loop Function to identify number of principal components that explain at least 85% of the variance
-    for comp in range(least_components, df.shape[1]):
+    for comp in range(least_components, df.shape[1]+1):
         pca = PCA(n_components= comp, random_state=42)
         pca.fit(scale(df))
         comp_check = pca.explained_variance_ratio_
