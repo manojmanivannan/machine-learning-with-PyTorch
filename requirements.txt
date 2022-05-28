@@ -2,9 +2,12 @@
 torch
 torchvision
 torchaudio
+torchviz
 numpy
+pandas
 sklearn
 tensorboard
 jupyter
 matplotlib
+seaborn
 protobuf==3.20.1

@@ -1,5 +1,5 @@
-from prediction_models.generic import *
-
+from prediction_models.genericRegressionClassification import *
+from plots.stage1 import *
 
 true_b = 1
 true_z = 3
@@ -8,14 +8,14 @@ true_w = 2
 # Number of samples
 N = 200
 # And make a convenient variable to remember the number of input columns
-n_features = 2
+n_features = 1
 
 # Data Generation
 np.random.seed(42)
 x = np.random.rand(N, n_features)
 
 # y = true_b +( true_w * x ) + noise
-y = true_b + (true_w * x[:,0]) +  (.1 * np.random.randn(N, )) + (true_z * x[:,1])
+y = true_b + (true_w * x[:,0]) +  (.1 * np.random.randn(N, )) #+ (true_z * x[:,1])
 y = y.reshape(-1,1) # or y = y[...,None]
 
 
@@ -33,6 +33,8 @@ val_idx = idx[int(N*.8):]
 # Generates train and validation sets
 x_train, y_train = x[train_idx], y[train_idx]
 x_val, y_val = x[val_idx], y[val_idx]
+
+figure1(x_train,y_train,x_val,y_val); plt.show() # comment this line if n_features>1
 
 torch.manual_seed(13)
 
@@ -77,7 +79,6 @@ print(model.state_dict())
 sbs = StepByStep(model, loss_fn, optimizer)
 sbs.set_loaders(train_loader,val_loader)
 sbs.set_tensorboard('classy')
-
 sbs.train(n_epochs=200)
 
 print(model.state_dict())

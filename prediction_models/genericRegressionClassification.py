@@ -14,7 +14,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from torch.utils.tensorboard import SummaryWriter
 
-plt.style.use('fivethirtyeight')
 
 class StepByStep(object):
     def __init__(self, model, loss_fn, optimizer):
