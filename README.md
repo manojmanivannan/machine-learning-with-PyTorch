@@ -9,3 +9,10 @@ Since I used a laptop with GPU ( NVIDIA RTX 3060 ) present, I installed GPU vers
 
 If you are using Windows, please use the installer at GraphViz's Windows Package. You also need to add GraphViz to the PATH (environment variable) in Windows. Most likely, you can find GraphViz executable file at C:\ProgramFiles(x86)\Graphviz2.38\bin. Once you found it, you need to set or change the PATH accordingly, adding GraphViz's location to it. For more details on how to do that, please refer to How to Add to Windows PATH Environment Variable.
 
+## Google colab support
+
+You can easily load the notebooks directly from GitHub using Colab and run them using a GPU provided by Google. You need to be logged in a Google Account of your own.
+
+You can go through the chapters already using the links below:
+
+[Airfoil Self-Noise dataset - Linear Regression](https://colab.research.google.com/github/manojmanivannan/machine-learning-with-PyTorch/blob/master/notebooks/Airfoil_regression.ipynb) - dataset from [here](https://archive.ics.uci.edu/ml/datasets/airfoil+self-noise)
