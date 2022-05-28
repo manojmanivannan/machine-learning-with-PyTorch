@@ -4,7 +4,6 @@ Daniel Voigt Godoy's
 Deep Learning with PyTorch - Step-by-Step - A Beginner's Guide
 """
 import numpy as np
-import pandas as pd
 import datetime
 import torch
 import torch.optim as optim
