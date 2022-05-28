@@ -20,8 +20,6 @@ def download_to_colab(chapter, branch='master'):
     folders = FOLDERS[chapter]
     filenames = FILENAMES[chapter]
     for folder, filename in zip(folders, filenames):
-        print('--------------------------')  
-        print('Folder name:',folder,'File name:',filename)
         if len(folder):
             try:
                 os.mkdir(folder)
@@ -32,13 +30,10 @@ def download_to_colab(chapter, branch='master'):
         if len(filename):
             path = os.path.join(folder, filename)
             try:
-                print('Parent directory:',os.path.dirname(path))
                 os.makedirs(os.path.dirname(path))
             except FileExistsError:
                 pass
             url = '{}{}'.format(base_url, path)
-            print('download URL:',url)
-            print('Save path:',path)
             r = requests.get(url, allow_redirects=True)
             open(path, 'wb').write(r.content)
 
