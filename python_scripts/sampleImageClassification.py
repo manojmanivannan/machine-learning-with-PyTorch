@@ -103,21 +103,25 @@ lr = 0.1
 
 torch.manual_seed(17)
 # Now we can create a model
-model_logistic = nn.Sequential()
-model_logistic.add_module('flatten', nn.Flatten())
-model_logistic.add_module('output', nn.Linear(25, 1, bias=False))
-model_logistic.add_module('sigmoid', nn.Sigmoid())
+model_relu = nn.Sequential()
+model_relu.add_module('flatten', nn.Flatten())
+model_relu.add_module('hidden0', nn.Linear(25, 5, bias=False))
+model_relu.add_module('activation0', nn.ReLU())
+model_relu.add_module('hidden1', nn.Linear(5, 3, bias=False))
+model_relu.add_module('activation1', nn.ReLU())
+model_relu.add_module('output', nn.Linear(3, 1, bias=False))
+model_relu.add_module('sigmoid', nn.Sigmoid())
 
-# Defines a SGD optimizer to update the parameters 
-optimizer_logistic = optim.SGD(model_logistic.parameters(), lr=lr)
+# Defines a SGD optimizer to update the parameters
+optimizer_relu = optim.SGD(model_relu.parameters(), lr=lr)
 
 # Defines a binary cross entropy loss function
 binary_loss_fn = nn.BCELoss()
 
-n_epochs = 100
+n_epochs = 50
 
-sbs_logistic = StepByStep(model_logistic, binary_loss_fn, optimizer_logistic)
-sbs_logistic.set_loaders(train_loader, val_loader)
-sbs_logistic.train(n_epochs)
+sbs_relu = StepByStep(model_relu, binary_loss_fn, optimizer_relu)
+sbs_relu.set_loaders(train_loader, val_loader)
+sbs_relu.train(n_epochs)
 
-fig = sbs_logistic.plot_losses(); plt.show()
+fig = sbs_relu.plot_losses(); plt.show()
