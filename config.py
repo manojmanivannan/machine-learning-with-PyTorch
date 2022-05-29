@@ -8,9 +8,11 @@ from IPython.display import HTML, display
 
 FOLDERS = {
     0: ['prediction_models','plots','explore','dataset'],
+    1: ['prediction_models','plots','explore','dataset'],
 }
 FILENAMES = {
     0: ['genericRegressionClassification.py','stage1.py','analytics.py','uci/airfoil_noise/airfoil_self_noise.dat'],
+    1: ['genericRegressionClassification.py','stage1.py','analytics.py','power_plant/pp_data.csv'],
 }
 
 def download_to_colab(chapter, branch='master'):  
@@ -48,8 +50,8 @@ try:
 except ModuleNotFoundError:
     IS_COLAB = False
 
-def config_chapter0(branch='master'):
+def import_from_github(dataset=0, branch='master'):
     if IS_COLAB:
         print('Downloading files from GitHub repo to Colab...')
-        download_to_colab(0, branch)
+        download_to_colab(dataset, branch)
         print('Finished!')
