@@ -8,11 +8,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from torch.utils.data import DataLoader, TensorDataset, random_split
-from torchvision.transforms import Compose, ToTensor, Normalize, \
-ToPILImage, Resize
+from torchvision.transforms import Compose, ToTensor, Resize
 from torchvision.datasets import ImageFolder
-from torch.optim.lr_scheduler import StepLR, ReduceLROnPlateau, \
-MultiStepLR, CyclicLR, LambdaLR
+from torch.optim.lr_scheduler import CyclicLR
 
 from prediction_models.genericRegressionClassification import StepByStep, CNN2
 from data_generation.rps import download_rps

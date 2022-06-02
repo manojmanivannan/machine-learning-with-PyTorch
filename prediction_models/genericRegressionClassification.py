@@ -11,6 +11,7 @@ import torch.nn as nn
 import torch.functional as F
 from torchvision.transforms import Normalize
 from torch.optim.lr_scheduler import LambdaLR
+import torch.optim as optim
 import numpy as np
 import matplotlib.pyplot as plt
 from torch.utils.tensorboard import SummaryWriter
@@ -34,17 +35,19 @@ class StepByStep(object):
         self.train_loader = None
         self.val_loader = None
         self.writer = None
-        
+        self.scheduler = None
+        self.is_batch_lr_scheduler = False
+        self.clipping = None
+
         # These attributes are going to be computed internally
         self.losses = []
         self.val_losses = []
+        self.learning_rates = []
         self.total_epochs = 0
+
         self.handles = {}
         self._gradients = {}
         self._parameters = {}
-        self.scheduler = None
-        self.is_batch_lr_scheduler = False
-        self.learning_rates = []
 
         # Creates the train_step function for our model, 
         # loss function and optimizer
@@ -493,7 +496,7 @@ class StepByStep(object):
         norm_std = total_stds / total_samples
         return Normalize(mean=norm_mean, std=norm_std)
 
-    def make_lr_fn(start_lr, end_lr, num_iter, step_mode='exp'):
+    def make_lr_fn(self, start_lr, end_lr, num_iter, step_mode='exp'):
         if step_mode == 'linear':
             factor = (end_lr / start_lr - 1) / num_iter
             def lr_fn(iteration):
@@ -569,6 +572,9 @@ class StepByStep(object):
         ax.set_ylabel('Loss')
         fig.tight_layout()
         return tracking, fig
+  
+    def set_optimizer(self, optimizer):
+        self.optimizer = optimizer
 
     def capture_gradients(self, layers_to_hook):
         if not isinstance(layers_to_hook, list):
@@ -640,6 +646,26 @@ class StepByStep(object):
                 current_lr = list(map(lambda d: d['lr'], self.scheduler.optimizer.state_dict()['param_groups']))
                 self.learning_rates.append(current_lr)
 
+    def set_clip_grad_value(self, clip_value):
+        self.clipping = lambda: nn.utils.clip_grad_value_(self.model.parameters(), clip_value=clip_value)
+
+    def set_clip_grad_norm(self, max_norm, norm_type=2):
+        self.clipping = lambda: nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=max_norm, norm_type=norm_type)
+
+    def set_clip_backprop(self, clip_value):
+        if self.clipping is None:
+            self.clipping = []
+        for p in self.model.parameters():
+            if p.requires_grad:
+                func = lambda grad: torch.clamp(grad, -clip_value, clip_value)
+                handle = p.register_hook(func)
+                self.clipping.append(handle)
+
+    def remove_clip(self):
+        if isinstance(self.clipping, list):
+            for handle in self.clipping:
+                handle.remove()
+        self.clipping = None
 
 
 
@@ -664,13 +690,13 @@ class CNN2(nn.Module):
         # First convolutional block
         # 3@28x28 -> n_feature@26x26 -> n_feature@13x13
         x = self.conv1(x)
-        x = F.relu(x)
-        x = F.max_pool2d(x, kernel_size=2)
+        x = torch.nn.functional.relu(x)
+        x = torch.nn.functional.max_pool2d(x, kernel_size=2)
         # Second convolutional block
         # n_feature * @13x13 -> n_feature@11x11 -> n_feature@5x5
         x = self.conv2(x)
-        x = F.relu(x)
-        x = F.max_pool2d(x, kernel_size=2)
+        x = torch.nn.functional.relu(x)
+        x = torch.nn.functional.max_pool2d(x, kernel_size=2)
         # Input dimension (n_feature@5x5)
         # Output dimension (n_feature * 5 * 5)
         x = nn.Flatten()(x)
@@ -684,7 +710,7 @@ class CNN2(nn.Module):
         if self.p > 0:
             x = self.drop(x)
         x = self.fc1(x)
-        x = F.relu(x)
+        x = torch.nn.functional.relu(x)
         # Output Layer
         # Input dimension (50)
         # Output dimension (3)
