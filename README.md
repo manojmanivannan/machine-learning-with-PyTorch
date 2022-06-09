@@ -13,7 +13,7 @@ If you are using Windows, please use the installer at GraphViz's Windows Package
 
 You can easily load the notebooks directly from GitHub using Colab and run them using a GPU provided by Google. You need to be logged in a Google Account of your own.
 
-You can go through the chapters already using the links below:
+You can go through the notebooks using the links below:
 
 - [Airfoil Self-Noise dataset - Linear Regression](https://colab.research.google.com/github/manojmanivannan/machine-learning-with-PyTorch/blob/master/notebooks/Airfoil_regression.ipynb) - dataset from [here](https://archive.ics.uci.edu/ml/datasets/airfoil+self-noise)
 
