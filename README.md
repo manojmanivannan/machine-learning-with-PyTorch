@@ -17,4 +17,6 @@ You can go through the notebooks using the links below:
 
 - [Airfoil Self-Noise dataset - Linear Regression](https://colab.research.google.com/github/manojmanivannan/machine-learning-with-PyTorch/blob/master/notebooks/Airfoil_regression.ipynb) - dataset from [here](https://archive.ics.uci.edu/ml/datasets/airfoil+self-noise)
 
-- [Adult Census - Classification](https://colab.research.google.com/github/manojmanivannan/machine-learning-with-PyTorch/blob/master/notebooks/PowerPlant_feature_engineered_regression.ipynb) - dataset from [here](https://archive.ics.uci.edu/ml/datasets/Combined+Cycle+Power+Plant)
+- [Combined Cycle Power Plant - Linear Regression](https://colab.research.google.com/github/manojmanivannan/machine-learning-with-PyTorch/blob/master/notebooks/PowerPlant_feature_engineered_regression.ipynb) - dataset from [here](https://archive.ics.uci.edu/ml/datasets/Combined+Cycle+Power+Plant)
+
+- [Adult Census - Classification](https://colab.research.google.com/github/manojmanivannan/machine-learning-with-PyTorch/blob/master/notebooks/Adult_census_classification.ipynb) - dataset from [here](https://archive.ics.uci.edu/ml/datasets/Adult)

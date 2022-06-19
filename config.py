@@ -9,10 +9,12 @@ from IPython.display import HTML, display
 FOLDERS = {
     0: ['prediction_models','plots','explore','dataset'],
     1: ['prediction_models','plots','explore','dataset'],
+    2: ['prediction_models','plots','explore','dataset','dataset','dataset'],
 }
 FILENAMES = {
     0: ['genericRegressionClassification.py','stage1.py','analytics.py','uci/airfoil_noise/airfoil_self_noise.dat'],
     1: ['genericRegressionClassification.py','stage1.py','analytics.py','power_plant/pp_data.csv'],
+    2: ['genericRegressionClassification.py','stage1.py','analytics.py','adult_census/adult.data','adult_census/adult.names','adult_census/adult.test'],
 }
 
 def download_to_colab(chapter, branch='master'):  
