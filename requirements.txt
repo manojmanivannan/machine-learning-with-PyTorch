@@ -5,7 +5,7 @@ torchaudio
 torchviz
 numpy
 pandas
-sklearn
+scikit-learn
 tensorboard
 jupyter
 matplotlib
