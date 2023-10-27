@@ -12,3 +12,5 @@ matplotlib
 seaborn
 protobuf==3.20.1
 feature-engine
+nodejs-bin
+ipympl
